@@ -31,34 +31,21 @@ namespace Stopwatch
         {
             try
             {
-                if (state == "RUNNING")
-                    throw new InvalidOperationException("Stopwatch is already running");
-            }
-            catch (Exception)
-            {
-            }
-            finally
-            {
                 state = "RUNNING";
 
                 start = DateTime.Now;
 
                 State();
             }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("Stopwatch is already running");
+            }
         }
 
         public void Stop()
         {
             try
-            {
-                if (state == "WAITING")
-                    throw new InvalidOperationException("Stopwatch is already waiting");
-                
-            }
-            catch (Exception)
-            {
-            }
-            finally
             {
                 state = "WAITING";
 
@@ -71,6 +58,11 @@ namespace Stopwatch
                 Console.WriteLine("the timer ran for " + duration + " and has run for a total time of " + totalTime);
 
                 State();
+
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("Stopwatch is already waiting");
             }
         }
 
