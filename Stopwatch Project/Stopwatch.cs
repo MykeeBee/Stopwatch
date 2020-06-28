@@ -29,40 +29,54 @@ namespace Stopwatch
 
         public void Start()
         {
-            try
+            if (state != "RUNNING")
             {
-                state = "RUNNING";
+                try
+                {
+                    state = "RUNNING";
 
-                start = DateTime.Now;
+                    start = DateTime.Now;
 
-                State();
+                    State();
+                }
+                catch (InvalidOperationException)
+                {
+                    Console.WriteLine("Stopwatch is already running");
+                }
             }
-            catch (InvalidOperationException)
+            else
             {
-                Console.WriteLine("Stopwatch is already running");
+                Console.WriteLine("The timer is already running. Type \"stop\" to see how long it was running for");
             }
         }
 
         public void Stop()
         {
-            try
+            if (state != "WAITING")
             {
-                state = "WAITING";
+                try
+                {
+                    state = "WAITING";
 
-                var end = DateTime.Now;
+                    var end = DateTime.Now;
 
-                var duration = end - start;
+                    var duration = end - start;
 
-                totalTime += duration;
+                    totalTime += duration;
 
-                Console.WriteLine("the timer ran for " + duration + " and has run for a total time of " + totalTime);
+                    Console.WriteLine("the timer ran for " + duration + " and has run for a total time of " + totalTime);
 
-                State();
+                    State();
 
+                }
+                catch (InvalidOperationException)
+                {
+                    Console.WriteLine("Stopwatch is already waiting");
+                }
             }
-            catch (InvalidOperationException)
+            else
             {
-                Console.WriteLine("Stopwatch is already waiting");
+                Console.WriteLine("The timer is already stopped. Type \"start\" to get it running");
             }
         }
 
